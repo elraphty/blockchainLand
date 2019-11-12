@@ -10,7 +10,7 @@
         "JWT_SECRET": "pojiaj234oi234oij234oij4"
     },
     "production": {
-        "MONGODB_URI": "mongodb+srv://rosuchukwu@gmail.com:M0ng0DB%20B0mber@desertcolonel-1-7nh9k.mongodb.net/test?retryWrites=true&w=majority",
+        "MONGODB_URI": "mongodb+srv://elraphty:Elraphty1@desertcolonel-1-7nh9k.mongodb.net/test?retryWrites=true&w=majority",
         "JWT_SECRET": "pojiaj234oi234oij234oij4"
     }
 }
