@@ -2,6 +2,13 @@ const BlockChain = require('./blockchain');
 
 const block = new BlockChain();
 
+
+ // "development": {
+    //     "PORT": 8000,
+    //     "MONGODB_URI": "mongodb://localhost:27017/blockchain",
+    //     "JWT_SECRET": "pojiaj234oi234oij234oij4"
+    // },
+
 const blockData = {
     "chain": [
         {
