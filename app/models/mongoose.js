@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 // Using Global Promise for Mongoose
 mongoose.Promise = global.Promise;
 
-mongoose.connect(process.env.MONGODB_URI, {
+mongoose.connect('mongodb+srv://elraphty:Elraphty1@desertcolonel-1-7nh9k.mongodb.net/blockchain', {
     useNewUrlParser: true,
     useCreateIndex: true
 })
