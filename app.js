@@ -7,7 +7,7 @@ const joinPath = require('join-path');
 const appRoot = require('app-root-path').path;
 require('dotenv').config();
 
-const PORT = process.argv[2];
+const PORT = process.env.PORT || process.argv[2];
 
 const app = express();
 
