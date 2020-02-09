@@ -110,7 +110,7 @@ route.post('/user/login', async (req, res) => {
 
         let hash = passwordHelper.hash(body.pass);
 
-        const userCount = await UserModel.countDocuments({ username: body.user, password: hash  });
+        const userCount = await UserModel.countDocuments({ username: body.user  });
 
         if (userCount === 1) {
             let user = await UserModel.findOne({ username: body.user, password: hash  });
