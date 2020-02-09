@@ -1,4 +1,5 @@
-const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const uuidv4 = require('uuid/v4');
 
 module.exports.sign = (data) => {
     // delete user password

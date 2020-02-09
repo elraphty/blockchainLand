@@ -108,12 +108,23 @@ route.post('/user/login', async (req, res) => {
     try {
         let body = req.body;
 
+        // console.log('Body----', body);
+
         let hash = passwordHelper.hash(body.pass);
+
+        // console.log('Hash----', hash);
 
         const userCount = await UserModel.countDocuments({ username: body.user  });
 
+        // console.log('UserCount----', userCount);
+
         if (userCount === 1) {
-            let user = await UserModel.findOne({ username: body.user, password: hash  });
+            let user = await UserModel.findOne({ username: body.user  });
+
+            // console.log('Userr ===', user);
+
+            user = JSON.stringify(user);
+            user = JSON.parse(user);
 
             let token = jwtHelper.sign(user);
             user.token = token;
@@ -124,8 +135,6 @@ route.post('/user/login', async (req, res) => {
                 message: 'Successful Login',
                 user
             });
-
-            
 
         } else {
             res.status(403).send('User does not exists');
