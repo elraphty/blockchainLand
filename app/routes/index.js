@@ -6,6 +6,7 @@ const blockChain = require(`${APP_ROOT_PATH}blockchain`);
 const rp = require('request-promise');
 const path = require('path');
 const passwordHelper = require('../helpers/passwordHelper');
+const jwtHelper = require('../helpers/jwtHelper');
 const PendingLandModel = require('../models/PendingLand');
 const LandModel = require('../models/Land');
 const UserModel = require('../models/User');
@@ -87,6 +88,38 @@ route.post('/user', async (req, res) => {
                 });
         } else {
             res.status(403).send('User already exist');
+        }
+
+    } catch (e) {
+        console.log('Error', e);
+    }
+});
+
+route.post('/user/login', async (req, res) => {
+    try {
+        let body = req.body;
+
+        let hash = passwordHelper.hash(body.pass);
+
+        const userCount = await UserModel.countDocuments({ username: body.user, password: hash  });
+
+        if (userCount === 1) {
+            let user = await UserModel.findOne({ username: body.user, password: hash  });
+
+            let token = jwtHelper.sign(user);
+            user.token = token;
+
+            delete user.password;
+
+            res.status(200).json({
+                message: 'Successful Login',
+                user
+            });
+
+            
+
+        } else {
+            res.status(403).send('User does not exists');
         }
 
     } catch (e) {

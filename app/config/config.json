@@ -6,11 +6,11 @@
     },
     "development": {
         "PORT": 8000,
-        "MONGODB_URI": "mongodb+srv://elraphty:Elraphty1@desertcolonel-1-7nh9k.mongodb.net/blockchain",
+        "MONGODB_URI": "mongodb+srv://elraphty:Elraphty1@dc-2-i3far.gcp.mongodb.net/blockchain?retryWrites=true&w=majority",
         "JWT_SECRET": "pojiaj234oi234oij234oij4"
     },
     "production": {
-        "MONGODB_URI": "mongodb+srv://elraphty:Elraphty1@desertcolonel-1-7nh9k.mongodb.net/blockchain",
+        "MONGODB_URI": "mongodb+srv://elraphty:Elraphty1@dc-2-i3far.gcp.mongodb.net/blockchain?retryWrites=true&w=majority",
         "JWT_SECRET": "pojiaj234oi234oij234oij4"
     }
 }
