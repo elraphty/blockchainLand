@@ -71,6 +71,15 @@ route.post('/user/broadcast', async (req, res) => {
     }
 });
 
+route.get('/user', async (req, res) => {
+    let user = await UserModel.find();
+
+    res.status(200).json({
+        message: 'Successful User',
+        user
+    });
+});
+
 route.post('/user', async (req, res) => {
     try {
         let user = req.body.user;
