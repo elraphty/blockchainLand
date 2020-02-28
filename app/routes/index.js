@@ -274,6 +274,8 @@ route.post('/receive-new-block', async (req, res) => {
 // register and broadcast node to the network
 route.post('/register-and-broadcast-node', (req, res) => {
     const newNodeUrl = req.body.newNodeUrl;
+
+    console.log('Body', newNodeUrl);
     // const notCurrentNode = newNodeUrl !== blockNetwork.currentNodeUrl;
 
     const checkNode = blockNetwork.networkNodes.filter(nd => {
@@ -341,7 +343,7 @@ route.post('/register-node', async (req, res) => {
     // console.log('Icoming Data', newNodeUrl);
     // const notAlreadyPresent = blockNetwork.networkNodes.indexOf(newNodeUrl) === -1;
     const newtworkCount = await NetworkModel.countDocuments({ node_url: newNodeUrl });
-    const notAlreadyPresent = newtworkCount === 0;
+    const notAlreadyPresent = newtworkCount == 0;
 
     const notCurrentNode = blockNetwork.currentNodeUrl !== newNodeUrl;
 
