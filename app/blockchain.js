@@ -22,6 +22,7 @@ function BlockChain() {
     // network nodes
     NetworkModel.find({}).then(res => {
         this.networkNodes = res;
+        // console.log('Network Nodes ===', res);
     });
 
     this.user = null;

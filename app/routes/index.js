@@ -387,9 +387,10 @@ route.post('/transaction/broadcast', (req, res) => {
 
     let regNodePromises = [];
 
+    // console.log("Network Nodes from routes ===", blockNetwork.networkNodes);
     blockNetwork.networkNodes.forEach(networkNodeUrl => {
         const requestOptions = {
-            uri: `${networkNodeUrl.node_url}/transaction`,
+            uri: `${networkNodeUrl.node_url}transaction`,
             method: 'POST',
             body: newTransaction,
             json: true
@@ -401,7 +402,10 @@ route.post('/transaction/broadcast', (req, res) => {
     Promise.all(regNodePromises)
         .then(data => {
             res.json({ note: 'Transaction Created and broadcast successfully' });
-        });
+        })
+        .catch(data => {
+            console.log('Transaction broadcast error==', data)
+        })
 });
 
 route.get('/consesus', (req, res) => {
