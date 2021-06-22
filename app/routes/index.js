@@ -45,7 +45,7 @@ route.post('/user/broadcast', async (req, res) => {
             blockNetwork.networkNodes.forEach(networkNodeUrl => {
                 // console.log('Network nodes----', networkNodeUrl);
                 let requestOptions = {
-                    uri: `${networkNodeUrl.node_url}/user`,
+                    uri: `${networkNodeUrl.node_url}user`,
                     method: 'POST',
                     body: {
                         user: blockNetwork.user
@@ -186,7 +186,7 @@ route.get('/mine', (req, res) => {
 
     blockNetwork.getLastBlockForApi(async (lastBlock) => {
         const previousBlockHash = lastBlock['hash'];
-        // console.log('Prev Block', lastBlock);
+        console.log('Prev Block', lastBlock);
 
         let pendingLand = await PendingLandModel.find({});
 
@@ -206,8 +206,9 @@ route.get('/mine', (req, res) => {
         let regNodePromises = [];
 
         blockNetwork.networkNodes.forEach(networkNodeUrl => {
+            console.log('Network Node', networkNodeUrl);
             const requestOptions = {
-                uri: `${networkNodeUrl.node_url}/receive-new-block`,
+                uri: `${networkNodeUrl.node_url}receive-new-block`,
                 method: 'POST',
                 body: newBlock,
                 json: true
@@ -222,7 +223,10 @@ route.get('/mine', (req, res) => {
                     note: 'block mined and broadcast successfully',
                     block: newBlock
                 });
-            });
+            })
+            .catch(e => {
+                console.log("Mine error ===", e);
+            })
     });
 });
 
@@ -413,13 +417,11 @@ route.get('/consesus', (req, res) => {
     let regNodePromises = [];
 
     blockNetwork.networkNodes.forEach(networkNodeUrl => {
-
         const requestOptions = {
-            uri: `${networkNodeUrl}/blockchain`,
+            uri: `${networkNodeUrl}blockchain`,
             method: 'GET',
             json: true
         }
-
         regNodePromises.push(rp(requestOptions));
 
     });

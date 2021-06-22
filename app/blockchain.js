@@ -140,6 +140,7 @@ BlockChain.prototype.addTransactionToPendingTransactions = async function (trans
 BlockChain.prototype.hashBlock = function (previousBlockHash, currentBlockData, nonce) {
     const dataAsString = previousBlockHash + nonce.toString() + JSON.stringify(currentBlockData);
     const hash = sha256(dataAsString);
+    // console.log('hash', hash);
 
     return hash;
 }
@@ -155,10 +156,10 @@ BlockChain.prototype.proofOfWork = function (previousBlockHash, currentBlockData
     let nonce = 0;
     let hash = this.hashBlock(previousBlockHash, currentBlockData, nonce);
 
-    while (hash.substring(0, 4) !== process.env.SECRET_CODE) {
+    while (hash.substring(0, 2) !== process.env.SECRET_CODE) {
         nonce++;
         hash = this.hashBlock(previousBlockHash, currentBlockData, nonce);
-        // console.log('hash', hash, hash.substring(0, 4));
+        console.log('hash', hash, hash.substring(0, 2), process.env.SECRET_CODE);
     }
 
     return nonce;
