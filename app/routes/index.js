@@ -417,8 +417,9 @@ route.get('/consesus', (req, res) => {
     let regNodePromises = [];
 
     blockNetwork.networkNodes.forEach(networkNodeUrl => {
+        // console.log('Node Urll 1 ==', networkNodeUrl);
         const requestOptions = {
-            uri: `${networkNodeUrl}blockchain`,
+            uri: `${networkNodeUrl.node_url}blockchain`,
             method: 'GET',
             json: true
         }
@@ -428,6 +429,7 @@ route.get('/consesus', (req, res) => {
 
     Promise.all(regNodePromises)
         .then(async  blockchains => {
+            console.log('Blockcchains ===', blockchains)
             const currentChainLength = await BlockModel.countDocuments();
             // const currentChainLength = blockNetwork.chain.length;
             let maxChainLength = currentChainLength;

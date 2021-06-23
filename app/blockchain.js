@@ -10,8 +10,8 @@ const NetworkModel = require('./models/NetworkNode');
 function BlockChain() {  
      
     // current block chain
-    BlockModel.find({}).then(res => {
-        console.log(res);
+    BlockModel.find().then(res => {
+        // console.log(res);
         this.chain = res;
     });
     // network pending transactions
