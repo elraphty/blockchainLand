@@ -11,16 +11,17 @@ function BlockChain() {
      
     // current block chain
     BlockModel.find({}).then(res => {
+        console.log(res);
         this.chain = res;
     });
     // network pending transactions
-    PendingLandModel.find({}).then(res => {
+    PendingLandModel.find().then(res => {
         this.pendingTransactions = res;
     });
     // current network url
     this.currentNodeUrl = currentNodeUrl;
     // network nodes
-    NetworkModel.find({}).then(res => {
+    NetworkModel.find().then(res => {
         this.networkNodes = res;
         // console.log('Network Nodes ===', res);
     });
