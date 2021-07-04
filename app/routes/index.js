@@ -298,7 +298,7 @@ route.post('/register-and-broadcast-node', (req, res) => {
     blockNetwork.networkNodes.forEach(networkNodeUrl => {
         // console.log('Network nodes----', networkNodeUrl);
         let requestOptions = {
-            uri: `${networkNodeUrl.node_url}/register-node`,
+            uri: `${networkNodeUrl.node_url}register-node`,
             method: 'POST',
             body: {
                 newNodeUrl: newNodeUrl
@@ -315,7 +315,7 @@ route.post('/register-and-broadcast-node', (req, res) => {
     Promise.all(regNodePromises)
         .then(data => {
             const bulkRequestOptions = {
-                uri: `${newNodeUrl}/register-nodes-bulk`,
+                uri: `${newNodeUrl}register-nodes-bulk`,
                 method: 'POST',
                 body: {
                     allNetworkNodes: [...blockNetwork.networkNodes, { node_url: blockNetwork.currentNodeUrl }]
@@ -429,18 +429,22 @@ route.get('/consesus', (req, res) => {
 
     Promise.all(regNodePromises)
         .then(async  blockchains => {
-            console.log('Blockcchains ===', blockchains)
+            // console.log('Blockcchains ===', blockchains)
             const currentChainLength = await BlockModel.countDocuments();
             // const currentChainLength = blockNetwork.chain.length;
             let maxChainLength = currentChainLength;
+            console.log("Max Chain ===", maxChainLength);
             let newLongestChain = null;
             let newPendingTransactions = null;
 
             blockchains.forEach(blockchain => {
+                console.log('Block chain Length ====', blockchain.chain.length)
                 if (blockchain.chain.length > maxChainLength) {
                     maxChainLength = blockchain.chain.length;
                     newLongestChain = blockchain.chain;
                     newPendingTransactions = blockchain.pendingTransactions;
+
+                    console.log('Replaced ======', blockchain.chain.length);
                 }
             });
 
@@ -454,10 +458,19 @@ route.get('/consesus', (req, res) => {
                 blockNetwork.chain = newLongestChain;
                 blockNetwork.pendingTransactions = newPendingTransactions;
 
-                res.json({
-                    note: 'This chain has been replaced',
-                    chain: blockNetwork.chain
-                });
+                const msg = blockNetwork.deleteAndUpdate()
+
+                if(msg === 'success') {
+                    res.json({
+                        note: 'This chain has been replaced',
+                        chain: blockNetwork.chain
+                    });
+                } else {
+                    res.json({
+                        note: 'error occured while replacing chain',
+                        chain: blockNetwork.chain
+                    });
+                }
             }
         });
 });

@@ -216,6 +216,24 @@ BlockChain.prototype.getBlock = async function (blockHash) {
     return correctBlock;
 }
 
+BlockChain.prototype.deleteAndUpdate = async function (data) {
+    let msg = 'error';
+    BlockModel.deleteMany({})
+      .then(r => {
+        PendingLandModel.deleteMany({})
+          .then(async rt => {
+            await BlockModel.insertMany(data.chain);
+            await PendingLandModel.insertMany(data.pendingLands);
+            msg = 'success'
+          })
+      })
+      .catch(e => {
+        console.log('Delete Error', e);
+      })
+
+    return msg;
+}
+
 BlockChain.prototype.getTransaction = async function (landId) {
 
     let correctTransaction = null;
