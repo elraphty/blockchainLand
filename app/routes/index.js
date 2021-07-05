@@ -434,8 +434,8 @@ route.get('/consesus', (req, res) => {
             // const currentChainLength = blockNetwork.chain.length;
             let maxChainLength = currentChainLength;
             console.log("Max Chain ===", maxChainLength);
-            let newLongestChain = null;
-            let newPendingTransactions = null;
+            let newLongestChain = [];
+            let newPendingTransactions = [];
 
             blockchains.forEach(blockchain => {
                 console.log('Block chain Length ====', blockchain.chain.length)
@@ -443,22 +443,27 @@ route.get('/consesus', (req, res) => {
                     maxChainLength = blockchain.chain.length;
                     newLongestChain = blockchain.chain;
                     newPendingTransactions = blockchain.pendingTransactions;
-
-                    console.log('Replaced ======', blockchain.chain.length);
                 }
             });
 
-            if (!newLongestChain || (newLongestChain && !blockNetwork.chainIsValid(newLongestChain))) {
+            // blockNetwork.chainIsValid(newlongestChain)
+            if (newLongestChain.length === 0) {
+                // console.log('Not a valid chain ======', newLongestChain);
                 res.json({
                     note: 'Current chain as not been replaced',
                     chain: blockNetwork.chain
                 });
-            } else if (newLongestChain && blockNetwork.chainIsValid(newLongestChain)) {
+            } else {
 
                 blockNetwork.chain = newLongestChain;
                 blockNetwork.pendingTransactions = newPendingTransactions;
 
-                const msg = blockNetwork.deleteAndUpdate()
+                const data = {
+                  chain: newLongestChain,
+                  pendingLands: newPendingTransactions,
+                }
+
+                const msg = blockNetwork.deleteAndUpdate(data);
 
                 if(msg === 'success') {
                     res.json({
