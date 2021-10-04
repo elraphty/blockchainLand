@@ -523,7 +523,6 @@ route.post('/landlist', async (req, res) => {
 
 route.get('/landlist', async (req, res) => {
     const landlist = await LandList.find();
-
     res.json({
         landlist
     });
