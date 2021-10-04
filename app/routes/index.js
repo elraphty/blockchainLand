@@ -12,6 +12,7 @@ const LandModel = require('../models/Land');
 const UserModel = require('../models/User');
 const BlockModel = require('../models/Block');
 const NetworkModel = require('../models/NetworkNode');
+const LandList = require('../models/LandList');
 
 const blockNetwork = new blockChain();
 
@@ -433,12 +434,10 @@ route.get('/consesus', (req, res) => {
             const currentChainLength = await BlockModel.countDocuments();
             // const currentChainLength = blockNetwork.chain.length;
             let maxChainLength = currentChainLength;
-            console.log("Max Chain ===", maxChainLength);
             let newLongestChain = [];
             let newPendingTransactions = [];
 
             blockchains.forEach(blockchain => {
-                console.log('Block chain Length ====', blockchain.chain.length)
                 if (blockchain.chain.length > maxChainLength) {
                     maxChainLength = blockchain.chain.length;
                     newLongestChain = blockchain.chain;
@@ -510,6 +509,23 @@ route.get('/address/:address', (req, res) => {
 
     res.json({
         addressData
+    });
+});
+
+route.post('/landlist', async (req, res) => {
+    const land = req.body;
+
+    await LandList.create(land);
+    res.json({
+        msg: 'Created succesfully'
+    });
+});
+
+route.get('/landlist', async (req, res) => {
+    const landlist = await LandList.find();
+
+    res.json({
+        landlist
     });
 });
 

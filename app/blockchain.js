@@ -8,7 +8,6 @@ const NetworkModel = require('./models/NetworkNode');
 
 /** Blockchain base function */
 function BlockChain() {  
-     
     // current block chain
     BlockModel.find().then(res => {
         // console.log(res);
