@@ -151,9 +151,9 @@ route.post('/smart/contract', async (req, res) => {
     let userId = req.body.userId;
     let receipientId = req.body.receipientId;
 
-    await LandModel.updateOne({ landId, userId }, { $set: { userId: receipientId } });
+    await LandList.updateOne({ landId, userId }, { $set: { userId: receipientId } });
 
-    let newLand = await LandModel.findOne({ landId });
+    let newLand = await LandList.findOne({ landId });
 
     // console.log('New Land', newLand);
 
