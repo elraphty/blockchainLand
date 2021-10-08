@@ -528,4 +528,11 @@ route.get('/landlist', async (req, res) => {
     });
 });
 
+route.get('/landlist/:userId', async (req, res) => {
+    let userId = req.params.userId;
+    let lands = await LandList.find({ userId: userId }).populate('userId');
+
+    res.json(lands);
+});
+
 module.exports = route;
