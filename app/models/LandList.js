@@ -10,7 +10,7 @@ const landSchema = new Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: 'users'
+        ref: 'User'
     },
     certificateNum: {
         type: String,
