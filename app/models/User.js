@@ -7,10 +7,9 @@ const userSchema = new Schema({
         type: Schema.Types.ObjectId,
         required: true
     },
-    username: {
+    fullName: {
         type: String,
         required: true,
-        unique: true
     },
     password: {
         type: String,
