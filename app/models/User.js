@@ -7,7 +7,7 @@ const userSchema = new Schema({
         type: Schema.Types.ObjectId,
         required: true
     },
-    fullName: {
+    fullname: {
         type: String,
         required: true,
     },
